@@ -5,7 +5,6 @@
 
 package com.mathworks.weiw.spark.examples
 
-//import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext._
 import org.apache.spark._
 
