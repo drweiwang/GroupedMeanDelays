@@ -1,9 +1,9 @@
+package com.mathworks.weiw.spark.examples
+
 /**
  * Compute mean arrival delays grouped by a grouping variable.
  * Created by wei wang on 7/28/14.
  */
-
-package com.mathworks.weiw.spark.examples
 
 import org.apache.spark.SparkContext._
 import org.apache.spark._
