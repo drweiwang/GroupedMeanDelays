@@ -1,4 +1,4 @@
-name := "GroupedMeanDelays"
+name := "SparkExamples"
 
 version := "1.0"
 

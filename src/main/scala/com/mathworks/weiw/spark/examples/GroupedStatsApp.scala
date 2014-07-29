@@ -11,7 +11,7 @@ import org.apache.spark._
 object GroupedStatsApp {
 
   def main(args: Array[String]) {
-    val t0 = System.nanoTime()
+    val t0 = System.currentTimeMillis()
 
     // Parse input arguments
     val grpIdx =  if (args.length > 0) args(0).toInt else 3
@@ -31,13 +31,15 @@ object GroupedStatsApp {
     val gCount = dataSet.map(p => (p._1,1.0)).reduceByKey(reduceFun)
     val gSum = dataSet.reduceByKey(reduceFun)
     val gMean = gCount.join(gSum).map(mapFun)
-    val gSSQ = dataSet.reduceByKey((x,y) => math.pow(x,2)+math.pow(y,2)).join(gCount).map(mapFun)
-    val gVar = gMean.join(gSSQ).map(x => (x._1, x._2._2-x._2._1))
+    val gMeanHashMap = gMean.collectAsMap()
+    println("\nMean by group: \n" + gMean.collect().mkString("\n") + "\n")
 
-    println("Mean by group: \n" + gMean.collect().mkString("\n"))
-    println("Variance by group:\n" + gVar.collect().mkString("\n"))
+    val gSSQ = dataSet.map(x=>(x._1, math.pow(x._2 - gMeanHashMap.get(x._1).get,2))).reduceByKey(reduceFun)
+    val gVar = gCount.join(gSSQ).map(mapFun)
 
-    val t1 = System.nanoTime()
-    println("Elapsed time: "+ (t1-t0)*1e9 +"seconds")
+    println("\nVariance by group:\n" + gVar.collect().mkString("\n") + "\n")
+
+    val t1 = System.currentTimeMillis()
+    println("Elapsed time: "+ (t1-t0).toDouble*1e-3 +"seconds")
   }
 }
