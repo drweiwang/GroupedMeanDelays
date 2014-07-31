@@ -18,7 +18,7 @@ object GroupedStatsApp {
     val filePath  = if (args.length > 1) args(1) else "/sandbox/bigdata/datasets/airline/2008.csv"
 
     // Set SparkConf configuration object and SparkContext object
-    val conf = new SparkConf().setAppName("Spark Example: Grouped Mean")
+    val conf = new SparkConf().setAppName("Spark Example: Grouped Stats")
     val sc = new SparkContext(conf)
 
     // Remove missing values
