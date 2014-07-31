@@ -25,6 +25,6 @@ object GroupedMeanApp {
     val t1 = System.currentTimeMillis()
     println("\n\n" + groupMean.mkString("\n"))
 
-    println("\nElapsed time: "+ (t1-t0)*1.0e3 +" seconds")
+    println("\nElapsed time: "+ (t1-t0)*1.0e-3 +" seconds")
   }
 }
