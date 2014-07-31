@@ -38,7 +38,10 @@ object LogitApp {
       val newW = (w._1 - gradient._1, w._2 - gradient._2)
       w = newW
     }
+
     println("Final separating plane: " + w)
+
+    // display time elapsed for this job
     val t1 = System.currentTimeMillis()
     println("Elapsed time: "+ (t1-t0).toDouble*1e-3 +"seconds")
   }
