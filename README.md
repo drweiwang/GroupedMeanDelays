@@ -4,6 +4,7 @@ Examples that shows how to use Apache Spark to process the airline on-time perfo
 
 1. GroupedMeanApp - Mean arrival day by group (eg. DayOfWeek)
 2. GroupedStatsApp - Count, mean, and variance of arrival delays by group
+3. LogitApp - Logistic regression of the simplest model: logit(ArrDelay >20) ~ Distance
 
 
 
