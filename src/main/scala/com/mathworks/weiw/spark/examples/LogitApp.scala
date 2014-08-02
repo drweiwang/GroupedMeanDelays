@@ -24,7 +24,7 @@ object LogitApp {
     // Remove missing values
     val points = sc.textFile(filePath)
                     .filter(line => {val f = line.split(","); isNumeric(f(14)) && isNumeric(f(18))})
-                    .map(line => {val f = line.split(","); val y = if (f(14).toDouble>20) 1.0 else 0.0; (y, f(18).toDouble/1000)})
+                    .map(line => {val f = line.split(","); val y = if (f(14).toDouble>20) 1.0 else -1.0; (y, f(18).toDouble/1000)})
                     .cache()
     val D = 2
     val rng = new Random()
@@ -33,10 +33,11 @@ object LogitApp {
     for (i<-1 to ITERATION) {
       val gradient = points.map(p => {
         val b = 1 / (1 + math.exp(-1 * p._1 * (w._1 + w._2 * p._2))) - 1
-        (b * p._1, b * p._2)
+        (b * p._1, b * p._1*p._2)
       }).reduce((x, y) => (x._1 + y._1, x._2 + y._2))
       val newW = (w._1 - gradient._1, w._2 - gradient._2)
       w = newW
+      println("Iteration["+i+"]: "+ w)
     }
 
     println("Final separating plane: " + w)
